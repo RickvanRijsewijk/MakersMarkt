@@ -1,0 +1,83 @@
+Testverslag: [Projectnaam / Applicatienaam]
+Auteur: Rick van Rijsewijk Datum: 18 mei 2026 Versie: 1.0 Projectfase: Oplevering / Examenomgeving
+1. Inleiding
+Dit testverslag beschrijft de resultaten van de uitgevoerde tests voor de applicatie [Naam Applicatie]. Het doel van deze tests is om te verifiëren of alle opgeleverde functionaliteiten voldoen aan de opgestelde functionele en niet-functionele eisen (Requirements / Acceptatiecriteria), en om de stabiliteit van het systeem te waarborgen voor de live-gang.
+2. Testomgeving & Tools
+De tests zijn uitgevoerd onder de volgende configuratie:
+Besturingssysteem: Windows 11 / macOS Architecture
+Browsers: Google Chrome (v124), Mozilla Firefox (v125)
+Database: MySQL / PostgreSQL via Beekeeper Studio
+Backend Framework: Laravel / PHP 8.3
+Frontend Framework: React / Next.js
+Test Tools: PHPUnit (backend), Cypress (E2E), Handmatige (smoke) tests
+3. Testresultaten Overzicht
+In totaal zijn er 24 testgevallen (Test Cases) gedefinieerd en uitgevoerd.
+Categorie
+Totaal Tests
+Geslaagd (Pass)
+Gefaald (Fail)
+Status
+Authenticatie & Autorisatie
+6
+6
+0
+100% Voltooid
+CRUD Functionaliteiten
+10
+9
+1
+90% (1 Herkansing nodig)
+API Integraties / Validatie
+5
+5
+0
+100% Voltooid
+UI/UX & Responsiveness
+3
+2
+1
+66% (Kleine UI bug)
+TOTAAL
+24
+22
+2
+91.6% Geslaagd
+
+4. Gedetailleerde Test Cases (Handmatig & Geautomatiseerd)
+TC-001: Gebruikersregistratie met valide gegevens
+Beschrijving: Controleren of een nieuwe gebruiker succesvol een account kan aanmaken.
+Pre-conditie: E-mailadres is nog niet bekend in de database.
+Stappen:
+Navigeer naar /register.
+Vul een geldige naam, uniek e-mailadres en wachtwoord in.
+Klik op "Registreer".
+Verwacht Resultaat: Gebruiker wordt aangemaakt in de database, krijgt een succesmelding en wordt doorgestuurd naar het dashboard.
+Actueel Resultaat: Gebruiker succesvol aangemaakt en ingelogd.
+Status: GESLAAGD
+TC-002: Product Toevoegen aan Dashboard (CRUD)
+Beschrijving: Controleren of een ingelogde administrator een nieuw product kan toevoegen.
+Pre-conditie: Gebruiker is ingelogd met de rol admin.
+Stappen:
+Ga naar het beheerpaneel en klik op "Product Toevoegen".
+Laat het verplichte veld "Prijs" leeg en klik op opslaan.
+Verwacht Resultaat: Het systeem toont een validatiefout: 'Het prijs veld is verplicht.' Het product wordt niet opgeslagen.
+Actueel Resultaat: Validatiefout verschijnt correct. Formulier slaat niets op.
+Status: GESLAAGD
+TC-003: Dark Mode Toggle (UI)
+Beschrijving: Controleren of de applicatie vloeiend wisselt tussen light en dark mode.
+Stappen: Klik op het 'maan'-icoon in de navigatiebalk.
+Verwacht Resultaat: De achtergrondkleuren veranderen naar donkere tinten en de tekst wordt wit. De voorkeur wordt opgeslagen in de localStorage.
+Actueel Resultaat: De pagina springt naar dark mode, maar na een handmatige pagina-refresh (F5) reset de applicatie naar light mode. localStorage wordt niet correct uitgelezen bij het laden van de component.
+Status: GEFAALD (Bug ingediend)
+5. Gevonden Fouten & Bevindingen (Bug Log)
+Hieronder staan de openstaande of opgeloste issues die tijdens het testen naar voren zijn gekomen:
+BUG-001 (Prio: Hoog): Database connectie time-out bij bulk upload. * Omschrijving: Bij het uploaden van meer dan 50 records tegelijkertijd crasht de request met een 504 Gateway Timeout.
+Status: Opgelost (Chunking toegevoegd aan de Laravel controller).
+BUG-002 (Prio: Laag): Dark mode switch wordt niet onthouden na refresh (Zie TC-003). * Omschrijving: useEffect hook in Next.js mist de initiële check op de lokale opslag.
+Status: Openstaand (Gepland voor volgende sprint).
+6. Conclusie & Advies
+De core functionaliteiten van de applicatie (zoals authenticatie en de primaire CRUD-acties) werken volledig naar behoren en zijn stabiel bevonden. De geautomatiseerde PHPUnit tests behalen een code coverage van 85%.
+Hoewel er twee openstaande bevindingen zijn (waaronder de UI-refresh bug), blokkeren deze de hoofdfunctionaliteit van het product niet. Mijn advies is om de applicatie vrij te geven voor de acceptatietest (UAT), mits BUG-002 voor de uiteindelijke oplevering wordt opgelost.
+Handtekening voor akkoord: Rick van Rijsewijk (Software Developer)
+Tips voor je examen:
+Pas de variabelen aan: Vervang de placeholders tussen [ ] en de genoemde technieken door de tools die je daadwerkelijk voor je examenproject gebruikt.
